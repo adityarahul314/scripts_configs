@@ -1,0 +1,55 @@
+Configs and Tweaks
+
+gnome-terminal HUGE header bar removal:
+	gsettings set org.gnome.Terminal.Legacy.Settings headerbar false
+
+systemd conf:
+	/esp/boot/loader.conf
+		default arch.conf
+		timeout 10
+		console-mode keep
+		editor no
+	
+	/esp/boot/loader/entries/arch.conf
+		title Emilynux
+		linux /vmlinuz-linux
+		initrd /initramfs-linux.img
+		options root=UUID=e7bba438-3d2b-4a15-b728-059fa0ac12a2 rw
+		
+	/esp/boot/loader/entries/windows.conf
+		title Windows10
+		efi \EFI\Microsoft\Boot\Bootmgfw.efi
+
+
+ssh key pair authentication:
+	client: create pub and pvt key pair in C:\Users\nikki\.ssh folder pub.asc, pvt.asc
+	server: copy pub (cat pub.asc) to authorised_keys file in /home/nikki/.ssh/authorized_keys
+
+rsync parameters:
+	rsync -avP --del --exclude={dir_a,file_a} source dest
+	-a : archive equivalent to −rlptgoD, -v : verbose, -P : continue partial progress
+	example: rsync /mnt/c/Users/nikki/rsync_test/dir_a /mnt/c/Users/nikki/rsync_test_dest/ -avP --del --exclude={dir_dd,dir_ee,exclude.txt}
+
+find exec checksum:
+	find ./ -type f -exec sha512sum {} \; > checksum_sha512.txt;sha512sum -c checksum_512.txt
+	find ./ -path ./fitgirl -prune -o -type f -exec sha512sum {} \; > checksum_sha512.txt;sha512sum -c checksum_512.txt
+	find ./ \( -path ./fitgirl -prune -o -path './msdownld.tmp' -prune -o -path './System Volume Information' -prune -o -path './$RECYCLE.BIN' -prune \) -o -type f -exec sha512sum {} \; > checksum_sha512.txt
+
+find exec ffprobe:
+	find ./ -type f -exec ffprobe -v quiet -select_streams v:0 -show_entries stream=duration -sexagesimal -of default=noprint_wrappers=1:nokey=1 {} \;
+
+ffprobe python pip module:
+	pip install ffprobe-python
+	https://pypi.org/project/ffprobe-python/#description
+
+tmpfs ramfs fstab:
+	tmpfs   /home/april/rpiramfs    tmpfs   rw,nosuid,nodev,size=4G 0       0
+
+python pip:
+	debian based: python3-pip
+	arch linux: python-pip
+
+packages:
+	base: neovim sudo dhcpcd wpa_supplicant/iwd python3-pip yt-dlp ffmpeg deluge 
+	ui/ux: sway waybar tofi/wofi swaybg dunst brightnessctl swaylock-effects foot/gnome-terminal
+	misc: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
