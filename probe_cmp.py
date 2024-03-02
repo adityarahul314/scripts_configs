@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 import os
 import sys
-import imghdr
 from ffprobe import FFProbe
 
 rootdir = os.getcwd()
@@ -27,7 +26,7 @@ for file_index in range(len(rootfiles)):
             time_m = "0"+str(time_m)
         if time_s <10:
             time_s = "0"+str(time_s)
-        time_hms = str(time_h)+"-"+str(time_m)+"-"+str(time_s)
+        time_hms = "["+str(time_h)+"-"+str(time_m)+"-"+str(time_s)+"]"
         print(time_hms, rootfiles[file_index])
 
     file_index = file_index+1
