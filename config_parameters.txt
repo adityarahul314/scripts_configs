@@ -53,3 +53,4 @@ packages:
 	base: neovim sudo dhcpcd wpa_supplicant/iwd python3-pip yt-dlp ffmpeg deluge 
 	ui/ux: sway waybar tofi/wofi swaybg dunst brightnessctl swaylock-effects foot/gnome-terminal
 	misc: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
+	cups: pacman cups, splix (3402)
