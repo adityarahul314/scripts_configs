@@ -13,6 +13,7 @@ systemd conf:
 	/esp/boot/loader/entries/arch.conf
 		title Emilynux
 		linux /vmlinuz-linux
+		initrd /intel-ucode.im
 		initrd /initramfs-linux.img
 		options root=UUID=e7bba438-3d2b-4a15-b728-059fa0ac12a2 rw
 		
@@ -22,13 +23,12 @@ systemd conf:
 
 
 ssh key pair authentication:
-	client: create pub and pvt key pair in C:\Users\nikki\.ssh folder pub.asc, pvt.asc
-	server: copy pub (cat pub.asc) to authorised_keys file in /home/nikki/.ssh/authorized_keys
+	client: create pub and pvt key pair in C:\Users\nikki\.ssh folder id_ed25519  id_ed25519.pub
+	server: copy pub (cat id_ed25519.pub) to authorised_keys file in /home/april/.ssh/authorized_keys
 
 rsync parameters:
 	rsync -avP --del --exclude={dir_a,file_a} source dest
 	-a : archive equivalent to −rlptgoD, -v : verbose, -P : continue partial progress
-	example: rsync /mnt/c/Users/nikki/rsync_test/dir_a /mnt/c/Users/nikki/rsync_test_dest/ -avP --del --exclude={dir_dd,dir_ee,exclude.txt}
 
 find exec checksum:
 	find ./ -type f -exec sha512sum {} \; > checksum_sha512.txt;sha512sum -c checksum_512.txt
@@ -54,3 +54,20 @@ packages:
 	ui/ux: sway waybar tofi/wofi swaybg dunst brightnessctl swaylock-effects foot/gnome-terminal
 	misc: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 	cups: pacman cups, splix (3402)
+
+wol raw magic packet over netcat:
+	12 Fs and 16x MAC Address without colon
+	FF FF FF FF FF FF 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4
+	7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4
+	7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4
+	pipe bin file above to nc
+	~ $ cat raw_packet.bin  | nc -w1 -u -b 255.255.255.255 4000
+
+systemd unit file for suspending battery at 60%
+	[Unit]
+	Description = suspend battery charge at 50%
+	After = default.target
+	[Service]
+	ExecStart = /usr/bin/bash -c 'echo 50 > /sys/class/power_supply/BAT0/charge_control_end_threshold'
+	[Install]
+	WantedBy = default.target
