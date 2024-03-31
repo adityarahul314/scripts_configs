@@ -71,3 +71,6 @@ systemd unit file for suspending battery at 60%
 	ExecStart = /usr/bin/bash -c 'echo 50 > /sys/class/power_supply/BAT0/charge_control_end_threshold'
 	[Install]
 	WantedBy = default.target
+
+	load user script before login
+	loginctl enable-linger
