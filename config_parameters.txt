@@ -55,6 +55,10 @@ packages:
 	misc: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 	cups: pacman cups, splix (3402)
 
+extensions:
+	3193/blur-my-shell
+	1160/dash-to-panel
+
 wol raw magic packet over netcat:
 	12 Fs and 16x MAC Address without colon
 	FF FF FF FF FF FF 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4 7E 64 AC B3 B7 C4
