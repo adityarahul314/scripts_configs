@@ -78,3 +78,14 @@ systemd unit file for suspending battery at 60%
 
 	load user script before login
 	loginctl enable-linger
+
+smb share template:
+	[5800x3d]
+	        comment = 5800x3d network share
+	        path = /home/april/
+	        read only = no
+	        browsable = yes
+	        writable = yes
+	        public = no
+	        create mask = 0664
+	        directory mask = 0775
