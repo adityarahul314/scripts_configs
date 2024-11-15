@@ -89,3 +89,6 @@ smb share template:
 	        public = no
 	        create mask = 0664
 	        directory mask = 0775
+
+wayland display control:
+	wlr-randr --output DSI-1 --off
